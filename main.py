@@ -14,7 +14,7 @@ TOWNS = os.getenv('SCHEDULER_TOWNS').split(',')
 SAVE_PATH = os.getenv('SCHEDULER_SAVE_PATH')
 # SAVE_PATH = os.getcwd()
 
-base_url = 'http://10.166.168.101:8009'
+base_url = os.getenv('SCHEDULER_BASE_URL')
 
 def login():
     logger.info('Login to get access token.')

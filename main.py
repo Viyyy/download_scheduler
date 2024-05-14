@@ -4,7 +4,7 @@ import os
 import dotenv
 from urllib.parse import quote
 from logger_ import logging
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 logger = logging.getLogger(__name__)
 logger.setLevel('INFO')
@@ -59,14 +59,14 @@ def download_file(api_key:str, town:str, start_date:str, save_path:str=SAVE_PATH
         logger.error(f'Failed to download {town} {start_date}. {res.status_code} {res.text}')
         
       
-scheduler = AsyncIOScheduler() # 实例化调度器
+scheduler = BackgroundScheduler() # 实例化调度器
 
 
 # @scheduler.scheduled_job('interval', minutes=60) # 每60分钟更新一次当天的数据
 
 # 每天8点执行一次
 # @scheduler.scheduled_job('cron', hour=17, minute=30)
-@scheduler.scheduled_job('logging', minutes=30)
+@scheduler.scheduled_job('interval', minutes=30)
 def download_today_data():
     logger.info('Start downloading today data.')
     api_key = login()
